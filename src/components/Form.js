@@ -3,7 +3,8 @@ import React from 'react';
 class Form extends React.Component {
   state = {
     firstName: "John",
-    lastName: "Henry"
+    lastName: "Henry",
+    submittedData: []
   }
 
   handleFirstNameChange = event => {
@@ -18,12 +19,41 @@ class Form extends React.Component {
     })
   }
 
+  handleSubmit = event => {
+    event.preventDefault()
+    let formData = {firstName: this.state.firstName, lastName: this.state.lastName}
+    let dataArray = this.state.submittedData.concat(formData)
+    // this.sendFormDataSomewhere(dataArray)
+    this.setState({submittedData: dataArray})
+  }
+
+  listOfSubmissions = () => {
+    return this.state.submittedData.map(data => {
+      return <div>
+        <span>{data.firstName}</span>
+        <span>{data.lastName}</span>
+      </div>
+    })
+  }
+
   render() {
-    return (
-      <form>
-        <input type="text" name="firstName" onChange={event => this.handleFirstNameChange(event)} value={this.state.firstName} />
-        <input type="text" name="lastName" onChange={event => this.handleLastNameChange(event)} value={this.state.lastName} />
-      </form>
+    return(
+      <div>
+        <form>
+          <input
+            type="text"
+            name='firstName' //added to refactor form submission handling
+            onChange={event => this.props.handleChange(event)}
+            value={this.props.formData.firstName}
+          />
+          <input
+            type="text"
+            name='lastName' //added to refactor form submission handling
+            onChange={event => this.props.handleChange(event)}
+            value={this.props.formData.lastName}
+          />
+        </form>
+      </div>
     )
   }
 }
