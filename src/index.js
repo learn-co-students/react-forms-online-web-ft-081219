@@ -4,7 +4,7 @@ import Form from './components/Form'
 
 ReactDOM.render(
   <div>
-    <Form />
+    <ParentComponent />
   </div>,
   document.getElementById('root')
 );
